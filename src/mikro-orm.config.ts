@@ -4,6 +4,7 @@ import path from 'path'
 
 import { __prod__ } from "./constants";
 import { Post } from "./entities/Post";
+import { User } from "./entities/User";
 
 export default {
     migrations: {
@@ -11,7 +12,7 @@ export default {
         glob: '!(*.d).{js,[tj]s}',
     },
     allowGlobalContext: true,
-    entities: [Post],
+    entities: [Post, User ],
     dbName: 'lireddit',
     type: 'postgresql',
     debug: !__prod__
