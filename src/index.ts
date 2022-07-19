@@ -14,8 +14,7 @@ import { HelloResolver } from './resolvers/hello'
 import { PostResolver } from './resolvers/post'
 import { UserResolver } from './resolvers/user'
 
-import * as redis from 'redis'
-// import redis from 'ioredis'
+import Redis from 'ioredis'
 import connectRedis from 'connect-redis'
 import session from 'express-session'
 
@@ -26,9 +25,7 @@ const main = async () => {
   const app = express()
 
   const RedisStore = connectRedis(session)
-  //  https://github.com/benawad/lireddit/issues/48#issuecomment-1005183713
-  const redisClient = redis.createClient({ legacyMode: true })
-  await redisClient.connect();
+  const redis = new Redis()
 
   app.use(cors({
     origin: "http://localhost:3000",
@@ -39,7 +36,7 @@ const main = async () => {
     session({
       name: COOKIE_NAME,
       store: new RedisStore({
-        client: redisClient,
+        client: redis,
         disableTouch: true
       }),
       cookie: {
@@ -59,7 +56,7 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false
     }),
-    context: ({ req, res }) => ({ em: orm.em, req, res })
+    context: ({ req, res }) => ({ em: orm.em, req, res, redis })
   })
 
   apolloServer.applyMiddleware({
