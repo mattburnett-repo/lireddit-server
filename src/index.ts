@@ -4,9 +4,9 @@ import 'reflect-metadata'
 import { MikroORM } from '@mikro-orm/core'
 import { COOKIE_NAME, __prod__ } from './constants'
 // import { Post } from './entities/Post'
-import microConfig from './mikro-orm.config'
-import express from 'express'
 import cors from 'cors'
+import express from 'express'
+import microConfig from './mikro-orm.config'
 
 import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
@@ -16,8 +16,8 @@ import { UserResolver } from './resolvers/user'
 
 import * as redis from 'redis'
 // import redis from 'ioredis'
-import session from 'express-session'
 import connectRedis from 'connect-redis'
+import session from 'express-session'
 
 const main = async () => {
   const orm = await MikroORM.init(microConfig)
