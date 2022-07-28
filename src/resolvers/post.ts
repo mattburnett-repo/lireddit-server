@@ -3,7 +3,7 @@ import { isAuth } from '../middleware/isAuth'
 import { MyContext } from 'src/types'
 import { Arg, Ctx, Field, InputType, Mutation, Query, Resolver, UseMiddleware, Int } from 'type-graphql'
 import { Post } from '../entities/Post'
-import { Connection, getConnection } from 'typeorm'
+import { getConnection } from 'typeorm'
 
 @InputType()
 class PostInput {
