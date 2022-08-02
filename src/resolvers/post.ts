@@ -1,9 +1,9 @@
 
-import { isAuth } from '../middleware/isAuth'
 import { MyContext } from 'src/types'
-import { Arg, Ctx, Field, InputType, Mutation, Query, Resolver, UseMiddleware, Int, FieldResolver, Root, ObjectType, Info } from 'type-graphql'
-import { Post } from '../entities/Post'
+import { Arg, Ctx, Field, FieldResolver, InputType, Int, Mutation, ObjectType, Query, Resolver, Root, UseMiddleware } from 'type-graphql'
 import { getConnection } from 'typeorm'
+import { Post } from '../entities/Post'
+import { isAuth } from '../middleware/isAuth'
 
 @InputType()
 class PostInput {
