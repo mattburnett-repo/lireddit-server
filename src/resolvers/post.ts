@@ -79,12 +79,13 @@ export class PostResolver {
   async posts(
     @Arg('limit', () => Int) limit: number,
     @Arg('cursor', () => String, { nullable: true }) cursor: string | null,
+    @Ctx() { req }: MyContext
     // @Info() info: any
   ): Promise<PaginatedPosts> {
     const realLimit = Math.min(50, limit)
     const realLimitPlusOne = realLimit + 1
 
-    const replacements: any[] = [realLimitPlusOne]
+    const replacements: any[] = [realLimitPlusOne, req.session.userId]
     if (cursor) {
       replacements.push(new Date(parseInt(cursor)))
     }
@@ -97,10 +98,14 @@ export class PostResolver {
           'email', u.email,
           'createdAt', u."createdAt",
           'updatedAt', u."updatedAt"
-        ) creator
+        ) creator,
+        ${req.session.userId
+        ? '(select value from updoot where "userId" = $2 and "postId" = p.id) "voteStatus"'
+        : 'null as "voteStatus"'
+      }
       FROM post p
       INNER JOIN public.user u on u.id = p."creatorId"
-      ${cursor ? `WHERE p."createdAt"  < $2` : ''}
+      ${cursor ? `WHERE p."createdAt"  < $3` : ''}
       ORDER BY p."createdAt" DESC
       LIMIT $1
     `, replacements)
