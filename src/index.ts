@@ -2,7 +2,6 @@
 import 'reflect-metadata'
 
 import { COOKIE_NAME, __prod__ } from './constants'
-// import { Post } from './entities/Post'
 import cors from 'cors'
 import express from 'express'
 
