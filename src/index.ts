@@ -1,5 +1,6 @@
 
 import 'reflect-metadata'
+import 'dotenv-safe/config'
 
 import { COOKIE_NAME, __prod__ } from './constants'
 import cors from 'cors'
@@ -27,9 +28,7 @@ import { createUpdootLoader } from './utils/createUpdootLoader'
 const main = async () => {
   const conn = await createConnection({
     type: 'postgres',
-    database: 'lireddit2',
-    username: 'postgres',
-    password: 'postgres',
+    url: process.env.DATABASE_URL,
     logging: true,
     synchronize: true,
     migrations: [path.join(__dirname, './migrations/*')],
@@ -43,10 +42,10 @@ const main = async () => {
   const app = express()
 
   const RedisStore = connectRedis(session)
-  const redis = new Redis()
+  const redis = new Redis(process.env.REDDIS_URL)
 
   app.use(cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN,
     credentials: true
   }))
 
@@ -61,10 +60,11 @@ const main = async () => {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         httpOnly: true,
         sameSite: 'lax',
-        secure: __prod__
+        secure: __prod__,
+        domain: __prod__ ? ".example.com" : undefined
       },
       saveUninitialized: false,
-      secret: 'blorbigkeit',
+      secret: process.env.SESSION_SECRET,
       resave: false
     })
   )
@@ -86,8 +86,8 @@ const main = async () => {
     cors: false
   })
 
-  app.listen(4000, () => {
-    console.log('server started on localhost:4000')
+  app.listen(parseInt(process.env.PORT), () => {
+    console.log(`server started on localhost:${process.env.PORT}`)
   })
 }
 
