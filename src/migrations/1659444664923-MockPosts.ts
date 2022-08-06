@@ -2,8 +2,8 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class MockPosts1659444664923 implements MigrationInterface {
 
-  public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`
+  public async up(_: QueryRunner): Promise<void> {
+    // await queryRunner.query(`
     // insert into post (title, text, "creatorId", "createdAt") values ('House on Haunted Hill', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', 1, '2021-08-29T04:28:33Z');
     // insert into post (title, text, "creatorId", "createdAt") values ('Steel Helmet, The', 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.
 
@@ -268,7 +268,7 @@ export class MockPosts1659444664923 implements MigrationInterface {
     // insert into post (title, text, "creatorId", "createdAt") values ('Appropriate Adult', 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.
 
     // Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.', 1, '2022-06-27T09:35:02Z');
-    `)
+    // `)
   }
 
   public async down(_: QueryRunner): Promise<void> {
