@@ -1,6 +1,6 @@
 # lireddit-server
 
-Reddit clone, server code
+Reddit clone tutorial, server code
 
 Includes the follow technologies:
 
